@@ -117,6 +117,36 @@ Response
     }
 ```
 
+#### show assets off creator
+header: content-type:application/json
+```
+  GET api/creator/assets-creator/{idCreator}
+```
+
+Response
+```json
+      {
+    
+    {
+        "id": 1,
+        "creatorId": 1,
+        "price": 0.3,
+        "description": "Inug dan andre",
+        "Url": "httpkwkwka",
+        "unlockableContent": false
+    },
+       {
+        "id": 1,
+        "creatorId": 1,
+        "price": 0.3,
+        "description": "Inug dan andre",
+        "Url": "httpkwkwka",
+        "unlockableContent": false
+    }
+}
+```
+
+
 ## Deployment
 ### Domain
 ```bash
