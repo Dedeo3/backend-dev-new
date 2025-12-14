@@ -100,6 +100,22 @@ export const getAssetsById = async (req, res) => {
     }
 };
 
+export const getProfile = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const assets = await prisma.creator.findFirst({
+            where: { id: parseInt(id) },
+        });
+
+        return res.status(200).json(assets);
+    } catch (error) {
+        console.error("Error fetching id:", error);
+        return res.status(500).json({
+            message: "Internal Server Error",
+        });
+    }
+};
+
 export const getAssetsByIdCreator = async (req, res) => {
     const { idCreator } = req.params;
     try {
