@@ -11,6 +11,8 @@ Documentation for handles features in arbiFans
 - show assets
 - show assets by id
 - Unlock assets
+- Get profile
+- Login creator
 
 
 ## Tech Stack
@@ -146,6 +148,39 @@ Response
 }
 ```
 
+#### get profile
+header: content-type:application/json
+```
+  GET api/creator/assets-creator/:idCreator
+```
+
+Response
+```json
+   {
+    "id": 1,
+    "name": "arr",
+    "walletAddress": "ajwefiaisdjfijfadsifsd"
+}
+```
+
+#### Login creator
+header: content-type:application/json
+```
+  POST api/creator/login
+```
+request:
+```json
+{
+  "username": "dio sahabat andre",
+  "walletAddress":"0xkaswjaskjas"
+}
+```
+Response
+```json
+   {
+    "creatorId": 1,
+}
+```
 
 ## Deployment
 ### Domain

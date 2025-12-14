@@ -131,3 +131,44 @@ export const getAssetsByIdCreator = async (req, res) => {
         });
     }
 };
+
+export const login = async (req, res) => {
+    const { username, walletAddress } = req.body;
+
+
+    if (!username || !walletAddress) {
+        return res.status(400).json({
+            message: "Username and walletAddress are required for login."
+        });
+    }
+
+    try {
+        const user = await prisma.creator.findFirst({
+            where: {
+                name: username,
+                walletAddress: walletAddress,
+            },
+            select: {
+                id: true,
+        
+            }
+        });
+
+        if (user) {
+
+            return res.status(200).json({
+            creatorId: user.id,
+            });
+        } else {
+            return res.status(401).json({
+                message: "Invalid credentials (Username or Wallet Address not found)."
+            });
+        }
+
+    } catch (error) {
+        console.error("Error during login:", error);
+        return res.status(500).json({
+            message: "Internal Server Error during login process.",
+        });
+    }
+};
