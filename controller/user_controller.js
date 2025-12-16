@@ -172,3 +172,19 @@ export const login = async (req, res) => {
         });
     }
 };
+
+export const updateProfile = async (req, res) => {
+    const { id } = req.params;
+    const { name } = req.body;
+    
+    try {
+        const updated = await prisma.creator.update({
+            where: { id: parseInt(id) },
+            data: { name },
+        });
+        return res.status(200).json(updated);
+    } catch (error) {
+        console.error("Error updating profile:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
