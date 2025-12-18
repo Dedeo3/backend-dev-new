@@ -185,7 +185,7 @@ export const login = async (req, res) => {
 export const updateProfile = async (req, res) => {
     const { id } = req.params;
     const { name } = req.body;
-    
+
     try {
         const updated = await prisma.creator.update({
             where: { id: parseInt(id) },
@@ -333,3 +333,44 @@ export const verifyAssetsPayment = async (req, res) => {
         });
     }
 };
+
+export const getProfileByWalletAddress = async (req, res) => {
+    const { walletAddress } = req.params;
+    // Validate wallet address
+    if (!walletAddress) {
+        return res.status(400).json({
+            error: 'Wallet address is required.'
+        });
+    }
+    // Basic format validation
+    if (!walletAddress.startsWith('0x') || walletAddress.length !== 42) {
+        return res.status(400).json({
+            error: 'Invalid wallet address format.'
+        });
+    }
+    try {
+        const creator = await prisma.creator.findFirst({
+            where: {
+                walletAddress: walletAddress
+            },
+            select: {
+                id: true,
+                name: true,
+                walletAddress: true,
+            }
+        });
+        // If no creator found, return 404
+        if (!creator) {
+            return res.status(404).json({
+                error: 'Creator not found.'
+            });
+        }
+        return res.status(200).json(creator);
+    } catch (error) {
+        console.error("Error finding creator by wallet:", error);
+        return res.status(500).json({
+            message: "Internal Server Error",
+        });
+    }
+};
+
